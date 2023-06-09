@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Management System</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 40px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 6px 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .prev-next {
+            margin-top: 20px;
+        }
+
+        .prev-next a {
+            background-color: #ddd;
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        .prev-next a:hover {
+            background-color: #555;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>User Management System</h1>
+
+<!-- Add User Form -->
+<h2>Add User</h2>
+<form method="POST" action="{{ url_for('add_user') }}">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name }}
+    <br>
+    {{ form.email.label }} {{ form.email }}
+    <br>
+    <button type="submit" class="submit-btn">Add User</button>
+</form>
+
+<hr>
+
+<!-- Search Users Form -->
+<h2>Search Users</h2>
+<form method="GET" action="{{ url_for('index') }}">
+    {{ search_form.q.label }} {{ search_form.q }}
+    <button type="submit" class="submit-btn">Search</button>
+</form>
+
+<hr>
+
+<!-- Edit/Delete Users Table -->
+<h2>Edit/Delete Users</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users.items %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('edit_user', id=user.id) }}">
+                    {{ form.hidden_tag() }}
+                    {{ form.name.label }} {{ form.name(value=user.name) }}
+                    <br>
+                    {{ form.email.label }} {{ form.email(value=user.email) }}
+                    <br>
+                    <button type="submit" class="submit-btn">Save</button>
+                </form>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('delete_user', id=user.id) }}">
+                    {{ form.hidden_tag() }}
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination Links -->
+<div class="prev-next">
+    {% if users.has_prev %}
+        <a href="{{ url_for('index', page=users.prev_num, q=search_form.q.data) }}">Prev</a>
+    {% endif %}
+    {% if users.has_next %}
+        <a href="{{ url_for('index', page=users.next_num, q=search_form.q.data) }}">Next</a>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>家庭支出趋势分析系统</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-4.6.2.css">
+    <script src="../static/js/jquery-3.6.4.js"></script>
+    <script src="../static/js/bootstrap-4.6.2.js"></script>
+    <script src="../static/js/popper_core-2.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="/index">HETAS</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/data_inquire">数据展示</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/data_predict">数据预测</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if session['username'] %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> {{ session['username'] }}，欢迎回来！</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" onclick="return confirm('确定要注销吗？')">注销</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" id="login-btn" href="/">登录</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <ol>
+                <h2>家庭支出预测的意义</h2>
+                <p>家庭支出预测可以帮助您更好地理解您的财务状况，规划未来的支出，并确保您实现您的财务目标。例如：</p>
+                <p>
+                    1、更好地了解自己的消费习惯：许多人经常会发现自己不知道自己的钱都去哪儿了，这时候家庭支出趋势分析系统就能派上用场。
+                    通过记录消费行为并进行分析，人们可以更加清楚地了解自己的消费习惯，从而有针对性地调整自己的消费行为。</p>
+                <p>
+                    2、优化家庭预算：了解自己的消费习惯后，人们就能够更加准确地制定家庭预算，并在实践中不断优化。
+                    通过家庭支出趋势分析系统，人们可以发现一些不必要的开支、效益较低的支出等，从而能够调整家庭预算，合理规划支出，减少浪费。</p>
+                <p>
+                    3、控制支出：通过对支出进行跟踪和分析，人们可以更好地控制支出，避免花费过多的钱，从而提高家庭的财务状况。</p>
+                <p>
+                    4、规划财务未来：通过家庭支出趋势分析系统，人们可以了解到自己的财务状况和发展趋势，从而能够规划财务未来，包括储蓄、投资、理财等方面。</p>
+                <p>
+                    5、提高财务管理水平：通过使用家庭支出趋势分析系统，人们能够更加科学地进行财务管理，提高财务管理水平，让家庭财务状况更加稳定。</p>
+            </ol>
+        </div>
+        <div class="col-md-6">
+            <img src="../static/image/index1.jpg" alt="Prediction Image 1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <ol>
+                <h2>家庭支出预测的好处</h2>
+                <p>
+                    1、帮助节约开支：通过家庭支出趋势分析系统，人们可以发现一些不必要的支出，避免浪费钱财，从而帮助节省开支。</p>
+                <p>
+                    2、促进家庭和谐：有了家庭支出趋势分析系统，家庭成员之间可以更加明确彼此的消费情况，从而避免因为财务问题引发的矛盾和纷争，促进家庭和谐。</p>
+                <p>
+                    3、制定合理地理财计划：通过家庭支出趋势分析系统，人们可以清楚地了解自己的收入和支出情况以及财务状况，从而制定出合理的理财计划，为未来做好充分准备。</p>
+                <p>
+                    4、提高金融素养：通过学习和使用家庭支出趋势分析系统，人们可以更加了解和掌握金融知识和技能，提高自己的金融素养。</p>
+                <p>
+                    5、促进经济发展：当越来越多的人开始重视家庭财务管理，认真掌握数据分析技术，就会为整个经济发展带来正向作用。
+                    因为家庭是经济活动中最基础、最重要的单位之一，而家庭支出趋势分析系统可以帮助人们更好地了解自己的消费习惯和偏好，从而为各类企业提供更准确的市场需求信息，
+                    进一步促进产品和服务的质量和创新，推动整个经济的发展。</p>
+            </ol>
+        </div>
+        <div class="col-md-6">
+            <img src="../static/image/index2.jpg" alt="Prediction Image 2">
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户编辑</title>
+    <link href="../static/css/register.css" rel="stylesheet"/>     <!-- 引用CSS文件 -->
+    <script src="../static/js/user_edit.js"></script>       <!-- 引用JS文件 -->
+</head>
+<body>
+<div class="container">
+    <div class="login-wrapper">
+        <div class="header">用户编辑</div>
+        <div class="form-wrapper">
+            <label>
+                <lable id="uid" style="display: none;">{{ id }}</lable>
+                用户名：<input type="text" name="username" placeholder="用户名" class="input-item" value={{ user.username }}>
+                密码：<input type="text" name="password" placeholder="密码" class="input-item" value={{ user.password }}>
+                用户类型：<input type="text" name="permissions" placeholder="0-管理员；1-普通用户" class="input-item" value={{ user.permissions }}>
+            </label>
+            <button type="submit" class="btn">提交修改</button>
+        </div>
+       
+    </div>
+</div>
+</body>
+</html>

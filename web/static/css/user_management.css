@@ -1,0 +1,45 @@
+/* 设置表格样式 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* 设置分页样式 */
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pageButton {
+  border: none;
+  background-color: #f2f2f2;
+  color: black;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.currentPage {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* 设置容器样式 */
+.container-fluid {
+  margin: 0 auto;
+  padding: 0 20px;
+}

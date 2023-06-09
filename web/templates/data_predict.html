@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>家庭支出趋势分析系统</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-4.6.2.css">
+    <script src="../static/js/jquery-3.6.4.js"></script>
+    <script src="../static/js/bootstrap-4.6.2.js"></script>
+    <script src="../static/js/popper_core-2.js"></script>
+    <script src="../static/js/data_predict.js"></script>
+    <script src="../static/js/echarts.min.js"></script>
+</head>
+<style>
+    .input1 {
+        width: 300px;
+        background-color: rgb(241, 240, 233);
+        margin: auto;
+
+    }
+
+    .col1 {
+        text-align: center;
+        margin: auto;
+
+    }
+
+    .account {
+        width: 1200px;
+
+        border: 1px solid #f1e9e9;
+        border-radius: 5px;
+        box-shadow: 10px 10px 5px #aaa;
+
+        margin-left: auto;
+        margin-right: auto;
+        padding: 28px 40px;
+    }
+
+</style>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="/index">HETAS</a>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/data_inquire">数据展示</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color: #ffffff" href="/data_predict">数据预测</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                {% if session['username'] %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ session['username'] }}，欢迎回来！</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" onclick="return confirm('确定要注销吗？')">注销</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" id="login-btn" href="/">登录</a>
+                    </li>
+                {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid" style="height: 2000px;">
+
+    <div style="top: 20px;"><br></div>
+
+    <div class="row col1 account">
+
+        <div class="col col-md-6">
+            <div class="form-group">
+                <label for="model">选择模型:</label>
+                <select class="form-control input1 " id="model">
+                    <option value="linear_regression">线性回归</option>
+                    <option value="neural_networks">神经网络</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="income">收入:</label>
+                <input type="number" class="form-control input1" id="income" placeholder="请输入收入" required>
+            </div>
+            <div class="form-group">
+                <label for="household_head_sex">户主性别(女性填0，男性填1):</label>
+                <input type="number" class="form-control input1" id="household_head_sex" placeholder="请输入户主性别"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="num_family_members">家庭成员数:</label>
+                <input type="number" class="form-control input1" id="num_family_members" placeholder="请输入家庭成员数"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_workers">工作人数:</label>
+                <input type="number" class="form-control input1" id="number_of_workers" placeholder="请输入工作人数"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_television">家中电视数量:</label>
+                <input type="number" class="form-control input1" id="number_of_television"
+                       placeholder="请输入家中电视数量"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_car">家中汽车数量:</label>
+                <input type="number" class="form-control input1" id="number_of_car" placeholder="请输入家中汽车数量"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_phone">家中手机数量:</label>
+                <input type="number" class="form-control input1" id="number_of_phone" placeholder="请输入家中手机数量"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_personal_computer">家中电脑数量:</label>
+                <input type="number" class="form-control input1" id="number_of_personal_computer"
+                       placeholder="请输入家中电脑数量" required>
+            </div>
+            <div class="form-group d-flex justify-content-center ">
+                <button type="button" class="btn btn-primary">预测</button>
+            </div>
+        </div>
+        <div class="col col-md-6 ">
+            <div class="form-group " style="margin-top: 350px;">
+                <label for="output_household_expenditure">预测结果:</label>
+                <output type="number" class="form-control output-box input1" id="output_household_expenditure"
+                        style="height: 50px;"></output>
+            </div>
+        </div>
+    </div>
+
+    <div style="top: 20px;"><br></div>
+    <div class="row col1 account">
+        <div id="main" style="width: 100%;height: 500px;"></div>
+        <div>
+            <h3>{{ rtext }}</h3>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    const myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    const option = {
+        title: {
+            text: '支出预测情况'
+        },
+        tooltip: {},
+        legend: {
+            data: []
+        },
+        xAxis: {
+            data: {{ xdatas }}
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '支出',
+                type: 'bar',
+                data: {{ ydatas  }}
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

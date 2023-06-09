@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>家庭支出趋势分析系统</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/bootstrap-4.6.2.css">
+    <script src="../static/js/jquery-3.6.4.js"></script>
+    <script src="../static/js/bootstrap-4.6.2.js"></script>
+    <script src="../static/js/popper_core-2.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="/index">HETAS</a>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" style="color: #ffffff" href="/data_inquire">数据展示</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/data_predict">数据预测</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if session['username'] %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ session['username'] }}，欢迎回来！</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" onclick="return confirm('确定要注销吗？')">注销</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" id="login-btn" href="/">登录</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <ol>
+                <h2>数据展示</h2>
+                <p>
+                    本系统所使用的数据来自kaggle平台的“菲律宾家庭收入和支出”数据集，此数据集是由菲律宾统计局（PSA）带头在全国范围内进行家庭收入和支出调查（FIES）。
+                    这项调查每三（3）年进行一次，旨在提供关于家庭收入和支出的数据，除其他外，包括按支出项目分列的消费水平、现金收入来源以及影响菲律宾收入和支出水平和模式的相关信息。
+                    该数据集内是菲律宾最新的家庭收入和支出调查（FIES）中的一些选定变量。它包含超过40k个观察值和60个变量，主要由该特定家庭的家庭收入和支出组成。
+                    我从中选取了'Total Household Income', 'Household Head Sex', 'Household Head Age', 'Total Number of
+                    Family members',
+                    'Members with age less than 5 year old', 'Members with age 5 - 17 years old', 'Total number of
+                    family members employed',
+                    'Number of Television', 'Number of Car, Jeep, Van', 'Number of Cellular phone', 'Number of Personal
+                    Computer',
+                    'Total Food Expenditure', 'Bread and Cereals Expenditure', 'Total Rice Expenditure', 'Meat
+                    Expenditure',
+                    'Total Fish and marine products Expenditure', 'Fruit Expenditure', 'Vegetables Expenditure',
+                    'Restaurant and hotels Expenditure', 'Alcoholic Beverages Expenditure', 'Tobacco Expenditure',
+                    'Clothing, Footwear and Other Wear Expenditure', 'Housing and water Expenditure',
+                    'Imputed House Rental Value', 'Medical Care Expenditure', 'Transportation Expenditure',
+                    'Communication Expenditure', 'Education Expenditure', 'Miscellaneous Goods and Services
+                    Expenditure'。
+                    并将消费数据合并放入后一起放入数据库中。</p>
+            </ol>
+        </div>
+        <div class="col-md-6">
+            <img src="../static/image/heatmap.jpg" alt="Heat Map" width="600" height="400">
+            <p>这是经过筛选后的数据之间的热力图，可以直观的看到数据之间的关联性。</p>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ol>
+                    <img src="../static/image/income.jpg" alt="Pie Chart of Income">
+                    <p>这张图是此数据库中的所有居民的收入饼状图，可以很直观的看出居民的收入区间分布情况，单位是菲律宾比索。</p>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <ol>
+                    <img src="../static/image/expenditure.jpg" alt="Pie Chart of Expenditure">
+                    <p>这张图是此数据库中的所有居民的总支出的饼状图，可以很直观的看出居民日常生活中的总支出分布情况，单位是菲律宾比索。</p>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <ol>
+                    <img src="../static/image/ROC.jpg" alt="Linear regression model evaluation plot">
+                    <p>这张图是本系统所使用的线性回归模型在预测测试集内数据所得到的图，这张图可以直观的体现本系统所使用的线性回归模型的准确性。</p>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <ol>
+                    <img src="../static/image/scatter_plot.jpg" alt="Neural network model evaluation plot">
+                    <p>这张图是本系统所使用的神经网络模型在预测测试集内数据所得到的图，在这张图上数据基本在图的对角线上呈正态分布，体现出神经网络模型对数据预测的准确性。</p>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
